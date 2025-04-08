@@ -1,3 +1,30 @@
+#' Simulate Sampling Distributions for the Central Limit Theorem
+#'
+#' This function simulates sampling distributions of standardized sample means
+#' using various inverse distribution functions to illustrate the Central Limit Theorem.
+#'
+#' @param n A numeric vector of sample sizes. Each value in the vector represents a separate simulation size.
+#' @param inverse A character string naming a built-in R distribution function that begins with "r" (e.g., "rnorm", "rbeta").
+#' Must be one of a predefined set of supported inverse functions.
+#' @param samples An integer indicating the number of samples to draw per sample size. Defaults to 249.
+#' @param ... Additional parameters passed to the specified inverse distribution function (e.g., `shape1`, `shape2` for `rbeta`).
+#'
+#' @return A data frame with `samples` rows and `length(n)` columns. Each column corresponds to a sample size in `n`, and each row
+#' represents a standardized sample drawn from the specified distribution and resampled with replacement.
+#'
+#' @details
+#' The function first generates random data from the specified inverse function, optionally using extra parameters.
+#' It then standardizes the values (z-scores), removes rows with `NA`, and performs resampling with replacement from each
+#' column of standardized values. The result is a data frame of simulated CLT sampling distributions.
+#'
+#' @examples
+#' # Simulate CLT sampling distributions from a Cauchy distribution
+#' simulate_clt(n = c(10, 50, 100), inverse = "rcauchy")
+#'
+#' # Simulate with extra distribution parameters
+#' simulate_clt(n = c(30, 60), inverse = "rbeta", shape1 = 2, shape2 = 5)
+#'
+#' @export
 simulate_clt <- function(n = NULL,
                          inverse = NULL,
                          samples = 249,
@@ -26,7 +53,8 @@ simulate_clt <- function(n = NULL,
   }
 
   # What values can the inverse arg take?
-  inverse <- match.arg(inverse,
+  inverse <- match.arg(
+                       inverse,
                        choices = c(
                          'rbeta','rbinom','rcauchy'
                          ,'rchisq','rexp','rf'
@@ -67,11 +95,12 @@ simulate_clt <- function(n = NULL,
                                             sample(
                                               na.omit(
                                                      centered_random_data[, i]
-                                                      ),
+                                                     ),
                                              size = samples,
-                                            replace = TRUE)
+                                            replace = TRUE
+                                                  )
                                           }
-                              )
+                          )
 
   resampled_data_df <- data.frame(resampled_data)
 
