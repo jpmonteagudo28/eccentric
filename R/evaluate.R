@@ -39,7 +39,7 @@ evaluate_data <- function(data, ci) {
             length(ci) == 1
            )
 
-  title <- paste0("📊 Percentage of Z-Scores Outside ±", ci, " Critical Value for Each Sample Size")
+  title <- paste0("Percentage of Z-Scores Outside", ci, " Critical Value for Each Sample Size")
 
   calculate_proportion <- function(x) {
     mean(abs(x) > ci, na.rm = TRUE)

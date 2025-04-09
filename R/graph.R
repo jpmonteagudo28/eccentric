@@ -122,7 +122,7 @@ graph_data <- function( data
                                     ,family = "serif"
                                     ,size = 4
                                     ,label = paste0("Rejection Rate = ", ifelse(is.null(a[i]),"NA",a[i]))
-      )
+                                  )
 
     plot_filename <- paste0("frame_", sprintf("%03d", i), ".png")
 
@@ -131,7 +131,7 @@ graph_data <- function( data
                      ,width = 6
                      ,height = 6
                      ,dpi = 150
-    )
+                   )
   }
 
   message("Individual plots saved to working directory")

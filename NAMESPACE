@@ -3,3 +3,4 @@
 export(evaluate_data)
 export(graph_data)
 export(simulate_clt)
+importFrom(gtools,mixedsort)

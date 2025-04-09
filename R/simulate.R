@@ -84,7 +84,7 @@ simulate_clt <- function(n = NULL,
   randomly_gen_data_matrix <- suppressWarnings(
                                               {do.call(cbind, randomly_gen_data)}
                                               )
-  randomly_gen_data_matrix <- randomly_gen_data_matrix[complete.cases(randomly_gen_data_matrix), ]
+  randomly_gen_data_matrix <- randomly_gen_data_matrix[stats::complete.cases(randomly_gen_data_matrix), ]
 
   # Standardize vector of values for inverse function
   centered_random_data <- scale(randomly_gen_data_matrix)
@@ -93,7 +93,7 @@ simulate_clt <- function(n = NULL,
   resampled_data <- lapply(1:length(n),
                               function(i) {
                                             sample(
-                                              na.omit(
+                                              stats::na.omit(
                                                      centered_random_data[, i]
                                                      ),
                                              size = samples,
