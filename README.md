@@ -13,7 +13,7 @@ The goal of eccentric is to …
 You can install the development version of eccentric like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# devtools::install::github("jpmonteagudo28/eccentric")
 ```
 
 ## Example
@@ -22,19 +22,34 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(eccentric)
-## basic example code
+
+# Create a vector of sample sizes
+n = n = c(10,25,30,50,70,100,200,500,900)
+
+# Sample an exponential distribution 3449 times, drawing 10,25,70,100,200,500 and 900 points
+# for each simulation and build a data frame
+data <- simulate_clt(n = n,
+                     inverse = "rexp",
+                     samples = 3449,
+                     rate = 2.35)
+#> Extra arguments will be passed to inverse function
+
+
+# Evaluate the percentage of z-score beyond the desired critical value
+a <- evaluate_data(data,ci = 1.96)
+#> Percentage of Z-Scores Outside1.96 Critical Value for Each Sample Size
+
+ 
+graph_data(data,ci = 1.96,compile_gif = TRUE,samples = 3449,n = n, a = a)
+#> Individual plots saved to working directory
+#> Using ImageMagick to create gif...
+#> Finished creating gif, saved in the working directory
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+The `graph_data()` function will produce the following output
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+knitr::include_graphics(here::here("man","output.gif"))
 ```
+
+<img src="man/output.gif" width="100%" />

@@ -25,7 +25,7 @@ The goal of eccentric is to ...
 You can install the development version of eccentric like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# devtools::install::github("jpmonteagudo28/eccentric")
 ```
 
 ## Example
@@ -34,12 +34,28 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(eccentric)
-## basic example code
+
+# Create a vector of sample sizes
+n = n = c(10,25,30,50,70,100,200,500,900)
+
+# Sample an exponential distribution 3449 times, drawing 10,25,70,100,200,500 and 900 points
+# for each simulation and build a data frame
+data <- simulate_clt(n = n,
+                     inverse = "rexp",
+                     samples = 3449,
+                     rate = 2.35)
+
+
+# Evaluate the percentage of z-score beyond the desired critical value
+a <- evaluate_data(data,ci = 1.96)
+
+ 
+graph_data(data,ci = 1.96,compile_gif = TRUE,samples = 3449,n = n, a = a)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+The `graph_data()` function will produce the following output
 
-```{r cars}
-summary(cars)
+```{r gif}
+knitr::include_graphics(here::here("man","output.gif"))
 ```
 
